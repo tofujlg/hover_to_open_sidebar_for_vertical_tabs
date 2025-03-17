@@ -67,9 +67,6 @@ export default class HoverToRevealSidebar extends Plugin {
 
 		// If the plugin hooks up any global DOM events (on parts of the app that doesn't belong to this plugin)
 		// Using this function will automatically remove the event listener when this plugin is disabled.
-		this.registerDomEvent(document, 'click', (evt: MouseEvent) => {
-			console.log('HoverToRevealSidebar: click', evt);
-		});
 
 		
 		
@@ -79,6 +76,8 @@ export default class HoverToRevealSidebar extends Plugin {
 			const leftSplit = this.app.workspace.leftSplit;
 			const rightSplit = this.app.workspace.rightSplit;
 			let isSidebarHovered = false;
+			let isDragging = false;
+			let isMouseDown = false;
 
 			/**
 			 * Handle left and right sidebar opening on mouse hover
@@ -94,6 +93,17 @@ export default class HoverToRevealSidebar extends Plugin {
 				}
 			});
 
+			// Replace drag detection with mouse events
+			this.registerDomEvent(document, 'mousedown', () => {
+				isMouseDown = true;
+				isDragging = true;
+			});
+
+			this.registerDomEvent(document, 'mouseup', () => {
+				isMouseDown = false;
+				isDragging = false;
+			});
+
 			/**
 			 * Handles left and right sidebar closing on mouse leave
 			 */
@@ -103,7 +113,7 @@ export default class HoverToRevealSidebar extends Plugin {
 				if(this.settings.leftSidebar){
 					isSidebarHovered = false;
 					setTimeout(() => {
-						if(!isSidebarHovered)
+						if(!isSidebarHovered && !isDragging && !isMouseDown)
 							leftSplit.collapse();
 					}, 100);
 					// @ts-ignore
