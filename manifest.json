@@ -1,11 +1,11 @@
 {
-	"id": "sample-plugin",
-	"name": "Sample Plugin",
+	"id": "hover-to-reveal-sidebar",
+	"name": "Hover to Reveal Sidebar",
 	"version": "1.0.0",
 	"minAppVersion": "0.15.0",
-	"description": "Demonstrates some of the capabilities of the Obsidian API.",
-	"author": "Obsidian",
-	"authorUrl": "https://obsidian.md",
+	"description": "Hover to reveal sidebar for vertical tabs. Gives you a better experience when using vertical tabs just like app like Arc browser",
+	"author": "jujekebab",
+	"authorUrl": "https://jujekebab.com",
 	"fundingUrl": "https://obsidian.md/pricing",
 	"isDesktopOnly": false
 }
