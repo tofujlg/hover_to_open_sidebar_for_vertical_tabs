@@ -4,10 +4,16 @@ import { App, Plugin, PluginSettingTab, Setting } from 'obsidian';
 
 interface HoverToRevealSidebarSettings {
 	mySetting: string;
+	leftSidebar: boolean;
+	rightSidebar: boolean;
+	expandSidebarThreshold: number;
 }
 
 const DEFAULT_SETTINGS: HoverToRevealSidebarSettings = {
-	mySetting: 'default'
+	mySetting: 'default',
+	leftSidebar: true,
+	rightSidebar: true,
+	expandSidebarThreshold: 10
 }
 
 export default class HoverToRevealSidebar extends Plugin {
@@ -64,6 +70,28 @@ export default class HoverToRevealSidebar extends Plugin {
 		this.registerDomEvent(document, 'click', (evt: MouseEvent) => {
 			console.log('HoverToRevealSidebar: click', evt);
 		});
+
+		
+		/**
+		 * Handle left and right sidebar opening on mouse hover
+		 */
+		this.registerDomEvent(document, "mousemove", (e) => {
+			if (this.settings.leftSidebar && e.clientX <= this.settings.expandSidebarThreshold) {
+				this.app.workspace.leftSplit.expand();
+				// isHovering = true;
+			}
+			if (this.settings.rightSidebar && e.clientX >= window.innerWidth - this.settings.expandSidebarThreshold) {
+				this.app.workspace.rightSplit.expand();
+				// isHovering = true;
+			}
+		});
+
+		/**
+		 * Handles left and right sidebar closing on mouse leave
+		 */
+
+		// this.registerDomEvent(document, "mouseenter", (e) => {
+		// });
 
 		// When registering intervals, this function will automatically clear the interval when the plugin is disabled.
 		this.registerInterval(window.setInterval(() => console.log('setInterval'), 5 * 60 * 1000));
