@@ -72,26 +72,42 @@ export default class HoverToRevealSidebar extends Plugin {
 		});
 
 		
-		/**
-		 * Handle left and right sidebar opening on mouse hover
-		 */
-		this.registerDomEvent(document, "mousemove", (e) => {
-			if (this.settings.leftSidebar && e.clientX <= this.settings.expandSidebarThreshold) {
-				this.app.workspace.leftSplit.expand();
-				// isHovering = true;
-			}
-			if (this.settings.rightSidebar && e.clientX >= window.innerWidth - this.settings.expandSidebarThreshold) {
-				this.app.workspace.rightSplit.expand();
-				// isHovering = true;
-			}
+		
+		this.app.workspace.onLayoutReady(() => {
+
+			const leftSplit = this.app.workspace.leftSplit;
+
+			/**
+			 * Handle left and right sidebar opening on mouse hover
+			 */
+			this.registerDomEvent(document, "mousemove", (e) => {
+				if (this.settings.leftSidebar && e.clientX <= this.settings.expandSidebarThreshold) {
+					this.app.workspace.leftSplit.expand();
+					// isHovering = true;
+				}
+				if (this.settings.rightSidebar && e.clientX >= window.innerWidth - this.settings.expandSidebarThreshold) {
+					this.app.workspace.rightSplit.expand();
+					// isHovering = true;
+				}
+			});
+
+			/**
+			 * Handles left and right sidebar closing on mouse leave
+			 */
+			// @ts-ignore
+			this.registerDomEvent(leftSplit.containerEl, "mouseleave", () => {
+				if(this.settings.leftSidebar){ //Check to see if the user has the 'Left Sidebar Hover' setting enabled.
+					// isHovering = false;
+					setTimeout(() => {
+						// if(!isHovering)
+							leftSplit.collapse(); //...if it has after the appropriate delay length, close the leftSplit...
+					}, 100);
+					// this.registerDomEvent(leftSplit.containerEl, "mouseenter", () => {
+					// 	isHovering = true; //...but if the mouse reenters before the delay length, set 'isHovering' to true, preventing the above from happening.
+					// });
+				}
+			});
 		});
-
-		/**
-		 * Handles left and right sidebar closing on mouse leave
-		 */
-
-		// this.registerDomEvent(document, "mouseenter", (e) => {
-		// });
 
 		// When registering intervals, this function will automatically clear the interval when the plugin is disabled.
 		this.registerInterval(window.setInterval(() => console.log('setInterval'), 5 * 60 * 1000));
