@@ -1,18 +1,17 @@
 // import { App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting } from 'obsidian';
-import { App, Plugin, PluginSettingTab, Setting } from 'obsidian';
-
+import { Plugin } from 'obsidian';
 
 interface HoverToRevealSidebarSettings {
 	mySetting: string;
-	leftSidebar: boolean;
-	rightSidebar: boolean;
+	leftSidebarEnabled: boolean;
+	rightSidebarEnabled: boolean;
 	expandSidebarThreshold: number;
 }
 
 const DEFAULT_SETTINGS: HoverToRevealSidebarSettings = {
 	mySetting: 'default',
-	leftSidebar: true,
-	rightSidebar: true,
+	leftSidebarEnabled: true,
+	rightSidebarEnabled: true,
 	expandSidebarThreshold: 10
 }
 
@@ -62,8 +61,9 @@ export default class HoverToRevealSidebar extends Plugin {
 		});
 		*/
 
+		// 
 		// This adds a settings tab so the user can configure various aspects of the plugin
-		this.addSettingTab(new HoverToRevealSidebarSettingsTab(this.app, this));
+		// this.addSettingTab(new HoverToRevealSidebarSettingsTab(this.app, this));
 
 		// If the plugin hooks up any global DOM events (on parts of the app that doesn't belong to this plugin)
 		// Using this function will automatically remove the event listener when this plugin is disabled.
@@ -83,11 +83,11 @@ export default class HoverToRevealSidebar extends Plugin {
 			 * Handle left and right sidebar opening on mouse hover
 			 */
 			this.registerDomEvent(document, "mousemove", (e) => {
-				if (this.settings.leftSidebar && e.clientX <= this.settings.expandSidebarThreshold) {
+				if (this.settings.leftSidebarEnabled && e.clientX <= this.settings.expandSidebarThreshold) {
 					this.app.workspace.leftSplit.expand();
 					isSidebarHovered = true;
 				}
-				if (this.settings.rightSidebar && e.clientX >= window.innerWidth - this.settings.expandSidebarThreshold) {
+				if (this.settings.rightSidebarEnabled && e.clientX >= window.innerWidth - this.settings.expandSidebarThreshold) {
 					this.app.workspace.rightSplit.expand();
 					isSidebarHovered = true;
 				}
@@ -107,10 +107,10 @@ export default class HoverToRevealSidebar extends Plugin {
 			/**
 			 * Handles left and right sidebar closing on mouse leave
 			 */
-			// FIXME: Type error, fix me later
+			// TODO:: Type error, fix me later
 			// @ts-ignore
 			this.registerDomEvent(leftSplit.containerEl, "mouseleave", () => {
-				if(this.settings.leftSidebar){
+				if(this.settings.leftSidebarEnabled){
 					isSidebarHovered = false;
 					setTimeout(() => {
 						if(!isSidebarHovered && !isDragging && !isMouseDown)
@@ -124,7 +124,7 @@ export default class HoverToRevealSidebar extends Plugin {
 			});
 			// @ts-ignore
 			this.registerDomEvent(rightSplit.containerEl, "mouseleave", () => {
-				if(this.settings.rightSidebar){
+				if(this.settings.rightSidebarEnabled){
 					isSidebarHovered = false;
 					setTimeout(() => {
 						if(!isSidebarHovered)
@@ -173,6 +173,7 @@ class HoverToRevealSidebarModal extends Modal {
 }
 */
 
+/*
 class HoverToRevealSidebarSettingsTab extends PluginSettingTab {
 	plugin: HoverToRevealSidebar;
 
@@ -198,3 +199,4 @@ class HoverToRevealSidebarSettingsTab extends PluginSettingTab {
 				}));
 	}
 }
+*/
