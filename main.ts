@@ -75,7 +75,10 @@ export default class HoverToRevealSidebar extends Plugin {
 		
 		this.app.workspace.onLayoutReady(() => {
 
+			// constants
 			const leftSplit = this.app.workspace.leftSplit;
+			const rightSplit = this.app.workspace.rightSplit;
+			let isHovering = false;
 
 			/**
 			 * Handle left and right sidebar opening on mouse hover
@@ -83,28 +86,41 @@ export default class HoverToRevealSidebar extends Plugin {
 			this.registerDomEvent(document, "mousemove", (e) => {
 				if (this.settings.leftSidebar && e.clientX <= this.settings.expandSidebarThreshold) {
 					this.app.workspace.leftSplit.expand();
-					// isHovering = true;
+					isHovering = true;
 				}
 				if (this.settings.rightSidebar && e.clientX >= window.innerWidth - this.settings.expandSidebarThreshold) {
 					this.app.workspace.rightSplit.expand();
-					// isHovering = true;
+					isHovering = true;
 				}
 			});
 
 			/**
 			 * Handles left and right sidebar closing on mouse leave
 			 */
+			// FIXME: Type error, fix me later
 			// @ts-ignore
 			this.registerDomEvent(leftSplit.containerEl, "mouseleave", () => {
 				if(this.settings.leftSidebar){ //Check to see if the user has the 'Left Sidebar Hover' setting enabled.
-					// isHovering = false;
+					isHovering = false;
 					setTimeout(() => {
-						// if(!isHovering)
+						if(!isHovering)
 							leftSplit.collapse(); //...if it has after the appropriate delay length, close the leftSplit...
 					}, 100);
-					// this.registerDomEvent(leftSplit.containerEl, "mouseenter", () => {
-					// 	isHovering = true; //...but if the mouse reenters before the delay length, set 'isHovering' to true, preventing the above from happening.
-					// });
+					// @ts-ignore
+					this.registerDomEvent(leftSplit.containerEl, "mouseenter", () => {
+						isHovering = true; //...but if the mouse reenters before the delay length, set 'isHovering' to true, preventing the above from happening.
+					});
+				}
+				if(this.settings.rightSidebar){
+					isHovering = false;
+					setTimeout(() => {
+						if(!isHovering)
+							rightSplit.collapse(); //...if it has after the appropriate delay length, close the leftSplit...
+					}, 100);
+					// @ts-ignore
+					this.registerDomEvent(rightSplit.containerEl, "mouseenter", () => {
+						isHovering = true; //...but if the mouse reenters before the delay length, set 'isHovering' to true, preventing the above from happening.
+					});
 				}
 			});
 		});
