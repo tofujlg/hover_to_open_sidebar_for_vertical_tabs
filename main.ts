@@ -111,6 +111,9 @@ export default class HoverToRevealSidebar extends Plugin {
 						isSidebarHovered = true;
 					});
 				}
+			});
+			// @ts-ignore
+			this.registerDomEvent(rightSplit.containerEl, "mouseleave", () => {
 				if(this.settings.rightSidebar){
 					isSidebarHovered = false;
 					setTimeout(() => {
