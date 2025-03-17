@@ -5,6 +5,7 @@ By using this plugin, you can have Arc brwoser like experience in your obsidian 
 
 ## Showcase
 Hover to open sidebars
+![gif demo](./assets/demo.gif)
 Works great with Vertical tabs plugin
 
 ## What is plugin different from other hover-to-open-sidebar plugins 
