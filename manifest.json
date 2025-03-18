@@ -3,9 +3,9 @@
 	"name": "Hover to Reveal Sidebar",
 	"version": "1.0.0",
 	"minAppVersion": "0.15.0",
-	"description": "Hover to reveal sidebar for vertical tabs. Gives you a better experience when using vertical tabs just like app like Arc browser",
+	"description": "Hover to reveal sidebar for vertical tabs, just like you do in Arc browser.",
 	"author": "jujekebab",
 	"authorUrl": "https://jujekebab.com",
 	"fundingUrl": "https://obsidian.md/pricing",
-	"isDesktopOnly": false
+	"isDesktopOnly": true
 }
