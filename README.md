@@ -1,16 +1,17 @@
 # Hover to Reveal Sidebar
 This is an Obsidian plugin that allows you to toggle open/close sidebars. 
-It is designed to use along side with [Vertical Tabs](https://github.com/oxdc/obsidian-vertical-tabs)
-By using this plugin, you can have Arc brwoser like experience in your obsidian vault.
+It is designed to be used alongside [Vertical Tabs](https://github.com/oxdc/obsidian-vertical-tabs)
+By using this plugin, you can have an Arc browser-like experience in your Obsidian vault.
 
-## Showcase
-Hover to open sidebars
+## Features
 ![gif demo](./assets/demo.gif)
-Works great with Vertical tabs plugin
+- Hover to open sidebars
+- Works seamlessly with Vertical Tabs plugin
+- Achieve better focus with minimal UI elements
 
-## What is plugin different from other hover-to-open-sidebar plugins 
-1. You can detect sidebar hover even when you disable `Show Ribbon`
-2. You can drag and drop items and the sidebar still not closed
+## How is this plugin different from other hover-to-open-sidebar plugins
+1. You can detect sidebar hover even when you disable `Show Ribbon` on the left edge
+2. You can drag and drop tab items in the sidebar
 
 ## Recommended Settings
 - Install [Vertical Tabs](https://github.com/oxdc/obsidian-vertical-tabs)
